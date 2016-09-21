@@ -1,0 +1,1 @@
+*/10 * * * * /home/ubuntu/insight/camus/camus.sh >> /home/ubuntu/insight/camus/00.log
