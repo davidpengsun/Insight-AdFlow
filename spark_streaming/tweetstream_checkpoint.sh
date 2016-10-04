@@ -4,7 +4,7 @@ spark-submit --master spark://ip-172-31-0-36:7077 \
 --executor-memory 4G \
 --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0,datastax:spark-cassandra-connector:2.0.0-M2-s_2.11 \
 --conf spark.cassandra.connection.host=172.31.0.36 \
-~/insight/spark_streaming/test.py localhost:2181 textticks
+~/insight/spark_streaming/tweetstream_checkpoint.py localhost:2181 textticks $1
 #--jars /home/ubuntu/lib/spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar \
 #--packages datastax:spark-cassandra-connector:1.6.0-s_2.10 \
 #--packages datastax:spark-cassandra-connector:1.6.0-s_2.10, org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0 \
