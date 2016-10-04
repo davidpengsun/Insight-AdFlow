@@ -74,32 +74,3 @@ if __name__=="__main__":
 	   .mode('overwrite')\
 	   .options(table="history10m", keyspace="ad_flow")\
 	   .save()
-#   10m granularity
-#		    .map(lambda x: ( (x['pid'], x['state'], roundTime(parse(x['ts']), 600).isoformat()), np.asarray([1, float(x['score'])]) ))\
-#   		    .reduceByKey(lambda x,y: x+y)\
-#		    .map(lambda (x,y): (x[0], x[1], float(y[1]/y[0]), x[2]))
-#    lines10m=linesDF.rdd\
-#		    .map(lambda (ts, uid, topic, state): ( (roundTime(parse(ts), 600).isoformat(), state), np.asarray([1]+[float(i) for i in topic]) ))\
-#   		    .reduceByKey(lambda x,y: x+y)\
-#		    .map(lambda (x,y): (x, y[1:]/y[0]))\
-#		    .map(lambda ((ts, state),u): [(y, state, float(u.dot(v)/(norm(u)*norm(v))), ts) for (y,v) in bv.value])\
-#		    .flatMap(lambda x: x)
-#    rowRDD10m=lines10m.map(lambda x: Row(pid=x[0], state=x[1], score=x[2], ts=x[3]))
-#    rowRDD10m.cache()
-#    rowRDD10m.toDF()\
-#    	     .write\
-#	     .format("org.apache.spark.sql.cassandra")\
-#	     .mode('overwrite')\
-#	     .options(table="history10m", keyspace="ad_flow")\
-#	     .save()
-#   1h granularity
-#    lines1h=rowRDD10m.map(lambda x: ( (x['pid'], x['state'], roundTime(parse(x['ts']), 3600).isoformat()), np.asarray([1, float(x['score'])]) ))\
-#		    .reduceByKey(lambda x,y: x+y)\
-#		    .map(lambda (x,y): (x[0], x[1], float(y[1]/y[0]), x[2]))
-#    lines1h.map(lambda x: Row(pid=x[0], state=x[1], score=x[2], ts=x[3]))\
-#	   .toDF()\
-#    	   .write\
-#	   .format("org.apache.spark.sql.cassandra")\
-#	   .mode('overwrite')\
-#	   .options(table="history1h", keyspace="ad_flow")\
-#	   .save()
