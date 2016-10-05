@@ -12,8 +12,13 @@ def getSqlContextInstance(sparkContext):
         globals()['sqlContextSingletonInstance'] = SQLContext(sparkContext)
     return globals()['sqlContextSingletonInstance']
 
+
+
+
+
+
 def process(lines):
-    tmp=lines.map(lambda x: x['topic'])\
+    tmp=lines.map(lambda x: x['uid'])\
                 .flatMap(lambda x: x)\
                 .filter(lambda x: x != '')\
                 .map(lambda x:(x,1))\
@@ -33,7 +38,7 @@ if __name__ == "__main__":
         exit(-1)
 
     sc = SparkContext(appName="sparktestapp")
-    ssc = StreamingContext(sc, 10)
+    ssc = StreamingContext(sc, 1)
 
     zkQuorum, topic = sys.argv[1:]
     kvs = KafkaUtils.createStream(ssc, zkQuorum, "spark-streaming-consumer", {topic: 1})
