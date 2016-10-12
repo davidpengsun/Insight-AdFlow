@@ -3,6 +3,8 @@ AdFlow is a realtime bidding system for advertisers to deliver the personalized 
 ##Motivations
 One of the multi-million dollar problems in marketing and advertisement industry is to search for the target consumers, find out their preferences and deliver to them the most related products. And often the consumers' preference have a non-uniform distribution over time and geolocations at least. Some deeper insights into this problem involves the market segmentation, which could be achieved by learning the network exists among the consumers based on their preferences. These are the three basic questions in business: when, where and to whom should the advertisements be delivered? To answer any of these questions would require a quantitative description of both the consumers and the porducts that are to be advertised. And as I will show in this project, with the help of convenient AWS platform, big data tools and all kinds of text data source generated through the social network, we could provide a feasible solution.
 
+![alt tag](https://github.com/davidpengsun/Insight-AdFlow/blob/master/pipeline.png)
+
 ##Models
 The product is designed to answer the aforementioned questions: when, where and whom? The key information about the consumers are extracted from the social network text messages such as Tweets. There is also a bidding system that allows the advertisers to compete and bid for the opportunnities to deliver the advertisements. The inputs are text messages like tweets and text descriptions of advertisements, as well as the bids from advertisers. The output includes: a) a product index that show each product's popularity among the consumers, b) a geological distribution of the product indeices, c) the records the bids won by each advertisers.
 
