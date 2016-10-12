@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 
 /usr/local/spark/bin/spark-submit --master spark://ip-172-31-0-36:7077 \
