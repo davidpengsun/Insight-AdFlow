@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Advertisement Flow</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="http://www.adsflow.cc/">Home</a></li>
+            <li><a href="http://www.adsflow.cc/realtime">WinningBids</a></li>
+            <li ><a href="http://www.adsflow.cc/map">Map</a></li>
+            <li class="active"><a href="http://www.adsflow.cc/test">RealtimeScore</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+ <p id="title">UTC Clock</p>
+ <p id="clock">Current Time</p>
+<p>Product score averaged over users.</p>
+<p>Please input the Product ID (0-499) that you want to search for in the following search box.</p>
+<form>
+<input type="text" id="formValueId" name="valueId" placeholder="Integer from 0 to 499"/>
+<input type="button" id="theButton" value="Update"/>
+</form>
+<p>Please click the "Update" button to show the product score averaged over users through our algorithm.</p>
+ <div id="container" style="height: 400px; min-width: 310px"></div>
+</body>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+function anyFunction()
+{
+ function fixTimeFormat(i) {
+    return ( i < 10 ) ? "0" + i : i;
+ }
+ var today = new Date(),
+    h = fixTimeFormat(today.getHours()),
+    m = fixTimeFormat(today.getMinutes()),
+    s = fixTimeFormat(today.getSeconds());
+ document.getElementById("clock").innerHTML = h + ":" + m + ":" + s;
+}
+
+$(function () {
+ setInterval(anyFunction, 1000);
+});
+</script>
+
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script>
+$(function() {
+  var button=document.getElementById("theButton");
+  button.onclick=function(){
+  url = 'http://www.adsflow.cc/api/'+button.form.valueId.value;
+  $.getJSON(url, function(data) {
+    // Create the chart
+    mappedData = data.pidscore.map(function(dataPoint) {
+      return [dataPoint.time, dataPoint.score]
+    })
+    $('#container').highcharts('StockChart', {
+
+
+      rangeSelector: {
+        selected: 1
+      },
+
+      title: {
+        text: 'Product Index'
+      },
+
+      series: [{
+        name: '',
+        data: mappedData,
+        tooltip: {
+          valueDecimals: 2
+        }
+      }]
+    });
+  });
+ };
+});
+
+</script>
+
+
+</html>

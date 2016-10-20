@@ -15,14 +15,12 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../static/css/starter-template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../static/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,9 +44,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="http://www.adsflow.cc/realtime">Realtime</a></li>
+            <li class="active"><a href="http://www.adsflow.cc/base">Home</a></li>
+            <li><a href="http://www.adsflow.cc/realtime">WinningBids</a></li>
             <li><a href="http://www.adsflow.cc/map">Map</a></li>
+            <li><a href="http://www.adsflow.cc/test">RealtimeScore</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -57,98 +56,88 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>AdFlow is a realtime bidding system for advertisers to deliver personalized ads to users.</h1>
+        <h4, align="justify">AdFlow is a realtime bidding system for advertisers to deliver the personalized ads to target users deployed on AWS and developed by Dr. David P. Sun (<a href="https://www.linkedin.com/in/davidpengsun">linkedin</a>) during his training in Insight Data Science Program. Details about the project could be found <a href="https://github.com/davidpengsun/Insight-AdFlow">here</a> on the Github.</h4> 
       </div>
-      	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-	<script src="https://code.highcharts.com/stock/highstock.js"></script>
-
-	<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-	<div id="container" style="height:400px;min-width:310px"></div>
-
-      <script>
-	$(function () {
-
-	    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-		// Create the chart
-		$('#container').highcharts('StockChart', {
-
-
-		    rangeSelector: {
-			selected: 1
-		    },
-
-		    title: {
-                text: 'AAPL Stock Price'
-            },
-
-		    series: [{
-			name: 'AAPL',
-			data: data,
-			tooltip: {
-			    valueDecimals: 2
-			}
-		    }]
-		});
-    	    });
-
-	  });
-       </script>
     </div><!-- /.container -->
 
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    <div id="demo" style="height: 400px; min-width: 310px"></div>
-    <script>
-	$(function () {
 
-	    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-		// Create the chart
-		$('#demo').highcharts('StockChart', {
-
-
-		    rangeSelector: {
-			selected: 1
-		    },
-
-		    title: {
-			text: 'AAPL Stock Price'
-		    },
-
-		    series: [{
-			name: 'AAPL',
-			data: data,
-			tooltip: {
-			    valueDecimals: 2
-			}
-		    }]
-		});
-	    });
-
-	});
-
-
-    </script>
-
-<p id="demo1"></p>
-
-<script>
-var myObject, myArray;
-function myFunction(a, b) {
-    return a * b;
-}
-myArray = [10, 2]
-myObject = myFunction.apply(myObject, myArray);      // Will return 20
-document.getElementById("demo1").innerHTML = myObject;
-</script>
+    <div id="container" style="height: 400px; min-width: 310px"></div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script>
+    $(function () {
+
+    $.getJSON('http://www.adsflow.cc/revenue', function (data) {
+        // Create the chart
+        mappedData = data.revenue.map(function(dataPoint) {
+      			return [dataPoint.time, dataPoint.revenue]
+    		});
+        $('#container').highcharts('StockChart', {
+
+
+            title: {
+                text: 'Revenue of Adflow by hour'
+            },
+
+            subtitle: {
+                text: ''
+            },
+
+            xAxis: {
+		tickInterval: 3600*1000,
+                gapGridLineWidth: 0
+            },
+
+            rangeSelector: {
+                buttons: [{
+                    type: 'hour',
+                    count: 1,
+                    text: '1h'
+                }, {
+                    type: 'day',
+                    count: 1,
+                    text: '1D'
+                }, {
+                    type: 'all',
+                    count: 1,
+                    text: 'All'
+                }],
+                selected: 1,
+                inputEnabled: false
+            },
+
+            series: [{
+                name: 'revenue',
+                type: 'area',
+                data: mappedData,
+                gapSize: 5,
+                tooltip: {
+                    valueDecimals: 2
+                },
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                },
+                threshold: null
+            }]
+        });
+      });
+    });
+    </script>
 </html>
